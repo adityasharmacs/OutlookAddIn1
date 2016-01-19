@@ -18,18 +18,7 @@ namespace OutlookAddIn1
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
             inspectors = this.Application.Inspectors;
-
-            //for (int i = 0; i < inspectors.Count; i++)
-            //{
-            //    Outlook.Inspector inspec = inspectors[i];
-
-            //    object current = inspec.CurrentItem;
-                                
-            //    //String inspectorPresent = inspectors[i]
-            //}
-
-            //inspectors.
-
+            
             inspectors.NewInspector += Inspectors_NewInspector;
         }
 
@@ -43,22 +32,13 @@ namespace OutlookAddIn1
             
             String body = mailItem.HTMLBody;
 
-            //var matches = Regex.Matches(body, @"<a\shref=""(?<url>.*?)"">(?<text>.*?)</a>");
-            //foreach (Match match in matches)
-            //{
-            //    Console.WriteLine("URL: " + match.Groups["url"].Value + " -- Text = " + match.Groups["text"].Value);
-            //    System.Windows.Forms.MessageBox.Show("URL: " + match.Groups["url"].Value + " -- Text = " + match.Groups["text"].Value);
-            //}
-
-            //((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.[?sharepoint?]\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)
-
-            var matches = Regex.Matches(body, @"<a\shref=""((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.[?sharepoint.com?]\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)</a>");
+            //Regex to Match the URL String that is read from the Body.
+            //as given on http://blog.mattheworiordan.com/post/13174566389/url-regular-expression-for-links-with-or-without. 
+            var matches = Regex.Matches(body, @"<a\shref=""((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)</a>");
             foreach (Match match in matches)
             {
                 System.Windows.Forms.MessageBox.Show(match.Value);
             }
-
-
 
             if (mailItem != null)
             {
